@@ -135,7 +135,8 @@ npm install @google/generative-ai dotenv
 node server.js
 ```
 
-<img width="2296" height="1280" alt="image" src="https://github.com/user-attachments/assets/13bb511c-bc54-4da1-a456-faa9969a8069" />
+<img width="2284" height="1270" alt="image" src="https://github.com/user-attachments/assets/86b5e517-e9ee-4fcc-a789-f66c15dd7d0f" />
+
 
 
 
