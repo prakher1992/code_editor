@@ -91,6 +91,49 @@ Starts at:
 
 http://localhost:4200
 
+## Obtaining & Configuring the Gemini API Key
+
+To enable AI-powered code suggestions, the backend uses Google Gemini via the @google/generative-ai SDK.
+Follow these steps to obtain and configure your Gemini API key.
+
+### Step 1 -  Create / Sign In to Your Google Account
+
+Required Google account to access the Gemini API.
+
+Login here:
+https://ai.google.dev
+
+### Step 2 - Create a New API Key
+
+Go to the Google AI Studio dashboard:
+https://aistudio.google.com/app/apikey
+
+Click “Create API Key”.
+
+Copy this key (need it in the backend).
+
+### Step 3 - Add the Gemini API Key to Backend Environment Variables
+
+Inside the backend project root folder, create a file:
+```bash
+.env
+```
+
+Add:
+```bash
+GEMINI_API_KEY=your_api_key_here
+```
+### Step 4 - Install Gemini SDK in Backend
+```bash
+npm install @google/generative-ai dotenv
+```
+
+### Step 5 -  Use the API Key in Backend Code
+
+### Step 7 - Restart the Server
+```bash
+node server.js
+```
 
 
 
