@@ -1,9 +1,11 @@
-const express = require('express');
-const http = require('http');
-const { Server } = require('socket.io');
-const sqlite3 = require('sqlite3').verbose();
-const cors = require('cors');
-const { v4: uuidv4 } = require('uuid');
+import express from "express";
+import http from "http"
+import { Server } from "socket.io";
+import sqlite3 from "sqlite3";
+import cors from "cors";
+import { v4 as uuidv4 } from "uuid";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import dotenv from "dotenv";
 
 const app = express();
 app.use(cors());
@@ -45,6 +47,49 @@ app.get('/room/:id', (req, res) => {
     res.json({ content: row.content || '' });
   });
 });
+
+//  API to validate-room endpoint
+app.get('/validate-room/:id', (req, res) => {
+  const id = req.params.id;
+  db.get(`SELECT id FROM rooms WHERE id = ?`, [id], (err, row) => {
+    if (err) return res.status(500).json({ error: 'DB error' });
+    if (!row) return res.status(404).json({ exists: false });
+    res.json({ exists: true });
+  });
+});
+
+
+// Gemini Proxy API
+dotenv.config();
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const model = genAI.getGenerativeModel({
+  model: "gemini-2.0-flash"
+});
+
+app.post("/api/complete", async (req, res) => {
+  try {
+    const { code } = req.body;
+
+    if (!code) {
+      return res.status(400).json({ error: "Missing code" });
+    }
+
+    const result = await model.generateContent([
+      {
+        text: `Analyze this code and suggest improvements:\n\n${code}`
+      }
+    ]);
+
+    const responseText = result.response.text();
+    res.json({ suggestion: responseText });
+
+  } catch (err) {
+    console.error("Gemini API Error:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 
 // Socket.IO logic
 io.on('connection', (socket) => {

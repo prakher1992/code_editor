@@ -26,6 +26,10 @@ export class RoomComponent implements OnInit, AfterViewInit, OnDestroy {
   // store content here until editorHost is ready
   private initialContent = '';
 
+  aiInput: string = '';
+  aiOutput: string = '';
+
+
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -123,4 +127,25 @@ export class RoomComponent implements OnInit, AfterViewInit, OnDestroy {
       this.view.destroy();
     }
   }
+
+  generateSuggestion() {
+    const codeToSend = this.aiInput.trim() || this.view?.state.doc.toString() || "";
+
+    if (!codeToSend) {
+      alert("Nothing to analyze!");
+      return;
+    }
+
+    this.http.post<any>(`${this.backend}/api/complete`, { code: codeToSend })
+      .subscribe({
+        next: (res) => {
+          this.aiOutput = res.suggestion || "No suggestion received.";
+        },
+        error: () => {
+          alert("Gemini API error");
+        }
+      });
+  }
+
+
 }

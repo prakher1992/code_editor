@@ -14,6 +14,45 @@
       <button (click)="leave()">Leave Room</button>
     </div>
     <div #editorHost class="editor" style="margin-top:0.8rem;"></div>
+
+    <!-- <hr style="margin:20px 0;"> -->
+
+
+
+    <button (click)="generateSuggestion()"
+            style="margin-top:10px;padding:10px 20px;background:#4f46e5;color:white;border:none;border-radius:6px;cursor:pointer;">
+      Generate Suggestion
+    </button>
+
+    <div *ngIf="aiOutput" 
+     style="
+        margin-top:15px;
+        padding:15px;
+        background:#f3f4f6;
+        border-radius:8px;
+        
+        overflow:auto;
+        border:1px solid #ddd;
+     ">
+  
+        <h4 style="margin-bottom:8px; font-weight:600;">Suggestion:</h4>
+
+        <pre style="
+              white-space:pre-wrap;
+              word-wrap:break-word;
+              overflow-wrap:break-word;
+              font-size:14px;
+              line-height:1.4;
+              background:white;
+              padding:10px;
+              border-radius:6px;
+              border:1px solid #ccc;
+            ">
+            {{ aiOutput }}
+        </pre>
+
+    </div>
+
   </div>
 
   
