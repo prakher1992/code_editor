@@ -18,7 +18,25 @@ export class HomeComponent {
   }
 
   joinRoom() {
-    if (!this.joinRoomId.trim()) return alert('Enter room ID');
-    this.router.navigate(['/room', this.joinRoomId]);
-  }
+  const id = this.joinRoomId?.trim();
+  if (!id) { alert('Enter room ID'); return; }
+
+  this.http.get<any>(`${this.backend}/validate-room/${id}`).subscribe({
+    next: (res) => {
+      if (res.exists) {
+        this.router.navigate(['/room', id]);
+      } else {
+        alert('Room does not exist');
+      }
+    },
+    error: (err) => {
+      if (err.status === 404) {
+        alert('Room does not exist');
+      } else {
+        console.error(err);
+        alert('Server error while validating room');
+      }
+    }
+  });
+}
 }

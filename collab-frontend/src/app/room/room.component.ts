@@ -55,6 +55,26 @@ export class RoomComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     this.socket = io(this.backend);
 
+    this.socket.on('room-not-found', ({ roomId }) => {
+        alert(`Room "${roomId}" not found. Returning to home.`);
+        // cleanup socket and navigate back
+        if (this.socket) {
+          this.socket.disconnect();
+          this.socket = null;
+        }
+        this.router.navigate(['/']);
+    });
+
+    this.socket.on('room-error', (payload) => {
+      alert(payload.message || 'Room error');
+      if (this.socket) {
+        this.socket.disconnect();
+        this.socket = null;
+      }
+      this.router.navigate(['/']);
+    });
+
+
     this.socket.on('room-content', ({ content }: { content: string }) => {
       this.initialContent = content ?? '';
 

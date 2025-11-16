@@ -95,23 +95,60 @@ app.post("/api/complete", async (req, res) => {
 io.on('connection', (socket) => {
   console.log('Socket connected:', socket.id);
 
+  // JOIN: check DB first, do not auto-create rooms
   socket.on('join-room', ({ roomId, username }) => {
-    socket.join(roomId);
-    console.log(`${username} joined ${roomId}`);
+    // verify room exists
+    db.get(`SELECT id FROM rooms WHERE id = ?`, [roomId], (err, row) => {
+      if (err) {
+        console.error('DB error in join-room:', err);
+        socket.emit('room-error', { message: 'Server DB error' });
+        return;
+      }
 
-    // send current content to joining client
-    db.get(`SELECT content FROM rooms WHERE id = ?`, [roomId], (err, row) => {
-      const content = row ? row.content : '';
-      socket.emit('room-content', { content });
+      if (!row) {
+        // room doesn't exist — inform the requester and do NOT join socket to room
+        socket.emit('room-not-found', { roomId });
+        console.log(`Join attempt failed: room ${roomId} not found (by ${username})`);
+        return;
+      }
+
+      // room exists — proceed to join
+      socket.join(roomId);
+      console.log(`${username} joined ${roomId}`);
+
+      // send current content to joining client
+      db.get(`SELECT content FROM rooms WHERE id = ?`, [roomId], (err2, row2) => {
+        const content = row2 ? row2.content : '';
+        socket.emit('room-content', { content });
+      });
+
+      socket.to(roomId).emit('user-joined', { username });
     });
-
-    socket.to(roomId).emit('user-joined', { username });
   });
 
+  // DOC CHANGE: only update if room exists (no auto-create)
   socket.on('doc-change', ({ roomId, content }) => {
-    const now = Date.now();
-    db.run(`INSERT OR REPLACE INTO rooms (id, content, updated_at) VALUES (?, ?, ?)`, [roomId, content, now]);
-    socket.to(roomId).emit('remote-doc-change', { content });
+    db.get(`SELECT id FROM rooms WHERE id = ?`, [roomId], (err, row) => {
+      if (err) {
+        console.error('DB error on doc-change select:', err);
+        return;
+      }
+      if (!row) {
+        console.log(`Ignoring doc-change for non-existing room ${roomId}`);
+        return;
+      }
+
+      const now = Date.now();
+      db.run(
+        `UPDATE rooms SET content = ?, updated_at = ? WHERE id = ?`,
+        [content, now, roomId],
+        (err2) => {
+          if (err2) console.error('DB error on doc-change update:', err2);
+        }
+      );
+
+      socket.to(roomId).emit('remote-doc-change', { content });
+    });
   });
 
   socket.on('disconnect', () => console.log('Socket disconnected:', socket.id));
