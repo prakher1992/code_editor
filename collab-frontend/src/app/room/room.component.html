@@ -1,0 +1,20 @@
+<div style="max-width:1000px;margin:1rem auto;">
+  <h3>Room: {{roomId}}</h3>
+
+  <div *ngIf="!joined">
+    <label>Enter username to join:</label>
+    <input [(ngModel)]="username" placeholder="Your name">
+    <button (click)="join()">Join Room</button>
+    <button (click)="leave()">Cancel</button>
+  </div>
+
+  <div *ngIf="joined">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <div>Username: {{username}}</div>
+      <button (click)="leave()">Leave Room</button>
+    </div>
+    <div #editorHost class="editor" style="margin-top:0.8rem;"></div>
+  </div>
+
+  
+</div>
