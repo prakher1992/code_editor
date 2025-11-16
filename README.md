@@ -89,10 +89,10 @@ ng serve --open
 
 Starts at:
 
-👉 http://localhost:4200
+http://localhost:4200
 
 
-<img width="2296" height="1280" alt="image" src="https://github.com/user-attachments/assets/13bb511c-bc54-4da1-a456-faa9969a8069" />
+
 
 
 
