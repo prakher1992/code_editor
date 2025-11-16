@@ -134,7 +134,7 @@ npm install @google/generative-ai dotenv
 ```bash
 node server.js
 ```
-
+## Overview of Architecture
 <img width="2284" height="1270" alt="image" src="https://github.com/user-attachments/assets/86b5e517-e9ee-4fcc-a789-f66c15dd7d0f" />
 
 
