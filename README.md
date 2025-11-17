@@ -176,7 +176,9 @@ Open it again in:
 
 Another browser (Chrome + Safari)
 
-## Step 2 — Enter a Username
+## Step 2 - Create/Join Room
+
+## Step 3 — Enter a Username
 
 Each user must enter a unique username.
 
@@ -200,7 +202,6 @@ Now test the real-time features:
 
 * When Prakher types, Satvik should see it instantly.
 * When Satvik types, Prakher should see it instantly.
-* Cursor position and changes stay synced
 
 ## Step 5 — Test Persistence
 
@@ -231,9 +232,9 @@ http://localhost:4200
 
 Example:
 ```bash
-function add(a, b) {
+# Write a program to add two numbers.
 ```
-## Step 3 — Press the "AI Suggest" Button
+## Step 3 — Press the "Generate Suggestion" Button
 
 
 
