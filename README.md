@@ -207,9 +207,10 @@ Now test the real-time features:
 Type some content
 
 Refresh the browser
-✔ The content should reload from the backend automatically
 
-### 2. Testing AI Code Completion (Gemini)
+The content should reload from the backend automatically
+
+### 2. Testing AI Code Suggestions (Gemini)
 
 The AI system sends code + cursor context to the backend and receives Gemini’s suggestion.
 
@@ -219,7 +220,7 @@ Backend must have a valid GEMINI_API_KEY in .env
 
 Run backend and frontend normally
 
-## Steps to Test AI Completion
+## Steps to Test AI Suggestions
 ## Step 1 — Open the Editor
 
 Go to:
