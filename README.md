@@ -146,6 +146,97 @@ node server.js
 
 <img width="2284" height="1270" alt="image" src="https://github.com/user-attachments/assets/86b5e517-e9ee-4fcc-a789-f66c15dd7d0f" />
 
+## Instruction to test both the real-time collabrative features and AI code completion
+
+The collaborative editor allows multiple users to edit the same document in real time using WebSockets (Socket.io).Before Testing - 
+
+**Start backend**
+
+```bash
+cd collab-backend
+node server.js
+```
+
+**Start frontend**
+
+```bash
+cd collab-frontend
+ng serve --open
+```
+
+### Steps to Test Collaboration
+
+## Step 1 — Open the Editor in Two Browser Windows
+
+Open:
+
+http://localhost:4200
+
+Open it again in:
+
+Another browser (Chrome + Safari)
+
+## Step 2 — Enter a Username
+
+Each user must enter a unique username.
+
+Examples:
+
+User A → Prakher
+
+User B → Satvik
+
+Step 3 — Kavita
+
+Both users enter the same room ID.
+
+Example:
+
+room123
+
+## Step 4 — Start Typing
+
+Now test the real-time features:
+
+* When Prakher types, Satvik should see it instantly.
+* When Satvik types, Prakher should see it instantly.
+* Cursor position and changes stay synced
+
+## Step 5 — Test Persistence
+
+Type some content
+
+Refresh the browser
+✔ The content should reload from the backend automatically
+
+### 2. Testing AI Code Completion (Gemini)
+
+The AI system sends code + cursor context to the backend and receives Gemini’s suggestion.
+
+**Before Testing**
+
+Backend must have a valid GEMINI_API_KEY in .env
+
+Run backend and frontend normally
+
+## Steps to Test AI Completion
+## Step 1 — Open the Editor
+
+Go to:
+
+http://localhost:4200
+
+## Step 2 — Write Some Prompt
+
+Example:
+```bash
+function add(a, b) {
+```
+## Step 3 — Press the "AI Suggest" Button
+
+
+
+
 
 
 
