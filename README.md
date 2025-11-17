@@ -1,7 +1,15 @@
-## Web-based Collaborative Real-Time Code Editor  
+## Web-based Code Editor  
 
-This project is a complete real-time collaborative code editor.  
+This code-editor is a complete real-time collaborative editor.  
 Multiple users can join a room, edit code together live, and request **AI-powered code suggestions** using **Google Gemini**.
+
+## Features
+* Real-time collaborative editing (Socket.IO)
+* Unique room IDs with persistent storage (SQLite)
+* AI code suggestions with Google Gemini API
+* Backend proxy for secure AI API calls
+* Save & load room data
+* CodeMirror 6 editor
 
 ## Setup of Backend and Frontend
 
@@ -32,7 +40,7 @@ collab-backend/
   ├── rooms.db  (auto created)
   └── .env
 ```
-### Step 5 — Add your Gemini API Key (.env)
+### Step 5 — Add Gemini API Key (.env)
 
 ```bash
 Create .env:
@@ -66,7 +74,7 @@ CodeMirror 6
 npm install codemirror @codemirror/state @codemirror/view @codemirror/lang-javascript @codemirror/autocomplete
 ```
 
-### Step 3 — Create home and room components:
+### Step 3 — Create home and room components
 ```bash
 ng generate component home
 ng generate component room
@@ -93,8 +101,8 @@ http://localhost:4200
 
 ## Obtaining & Configuring the Gemini API Key
 
-To enable AI-powered code suggestions, the backend uses Google Gemini via the @google/generative-ai SDK.
-Follow these steps to obtain and configure your Gemini API key.
+To enable **AI-powered code suggestions**, the backend uses **Google Gemini via the @google/generative-ai SDK**.
+These steps has been followed to obtain and configure the Gemini API key.
 
 ### Step 1 -  Create / Sign In to Your Google Account
 
@@ -108,7 +116,7 @@ https://ai.google.dev
 Go to the Google AI Studio dashboard:
 https://aistudio.google.com/app/apikey
 
-Click “Create API Key”.
+Click **Create API Key**.
 
 Copy this key (need it in the backend).
 
@@ -135,6 +143,7 @@ npm install @google/generative-ai dotenv
 node server.js
 ```
 ## Overview of Architecture
+
 <img width="2284" height="1270" alt="image" src="https://github.com/user-attachments/assets/86b5e517-e9ee-4fcc-a789-f66c15dd7d0f" />
 
 
